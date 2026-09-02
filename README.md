@@ -24,8 +24,6 @@ One of the biggest things I took from the module was understanding how these top
 
 For example, accessing a website can involve DNS resolving the domain, IP addressing and routing getting the traffic to the correct server, TCP establishing reliable communication and ports identifying the service the traffic needs to reach.
 
-My more detailed notes can be found in [`networking-notes.md`](networking-notes.md).
-
 ---
 
 ## Commands
@@ -41,8 +39,6 @@ Some of the areas I practised included:
 - Checking network connections and ports
 - Connecting to remote servers using SSH
 - Managing an NGINX service on Linux
-
-The commands and explanations are documented separately in [`commands.md`](commands.md).
 
 ---
 
