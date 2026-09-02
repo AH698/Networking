@@ -1,146 +1,185 @@
 # Networking
 
-This directory documents my work from the Networking module of my DevOps learning journey. It covers the networking fundamentals I studied, the commands I worked with, and a practical AWS project where I deployed an NGINX web server and connected it to a domain using Route 53.
+This repository documents what I covered during the Networking module of my DevOps learning. It includes my networking notes, useful commands and a practical AWS project where I hosted an NGINX web server on EC2 and connected it to a domain using Route 53.
 
 ## What I Covered
 
-Throughout the module I worked through the main concepts behind how devices communicate across networks, including:
+Throughout the module I covered:
 
 - LANs and WANs
 - Switches, routers and firewalls
 - IPv4, IPv6 and MAC addresses
 - Ports and protocols
 - TCP and UDP
-- The OSI and TCP/IP models
+- The OSI model
+- The TCP/IP model
 - DNS and DNS records
-- Routing and routing tables
-- Binary and CIDR notation
+- Routing
+- Binary and CIDR
 - Subnetting
 - NAT and PAT
 - Network troubleshooting
 - Cloud networking
 
-One of the biggest things I took from the module was understanding how these topics connect rather than seeing them as completely separate concepts.
+One of the main things I took from this module was understanding how these topics connect to each other.
 
-For example, accessing a website can involve DNS resolving the domain, IP addressing and routing getting the traffic to the correct server, TCP establishing reliable communication and ports identifying the service the traffic needs to reach.
+For example, when accessing a website, DNS is used to find the IP address associated with the domain, routing helps traffic reach the correct network, and ports identify which service the traffic is trying to reach.
 
----
+My more detailed notes can be found in [Networking_notes.md](Networking_notes.md).
 
 ## Commands
 
-Alongside the theory, I worked with networking and Linux commands for checking network information, testing connectivity, investigating routes and working with remote servers.
+Alongside the theory, I worked with different Linux and networking commands.
 
-Some of the areas I practised included:
+These included commands for checking network information, testing connectivity, tracing routes, querying DNS and checking network connections.
 
-- Checking network interfaces and IP information
-- Testing connectivity
-- Tracing network routes
-- Querying DNS
-- Checking network connections and ports
-- Connecting to remote servers using SSH
-- Managing an NGINX service on Linux
+I also used SSH to remotely access an AWS EC2 instance and Linux commands to install and manage NGINX.
+
+The commands I covered can be found in [commands.md](commands.md).
 
 ---
 
-# AWS Route 53 & EC2 Project
+# AWS Route 53 and EC2 Project
 
-To put the networking theory into practice, I completed an AWS project where I deployed an NGINX web server on an Ubuntu EC2 instance and connected it to a domain using Amazon Route 53.
+To put some of the networking concepts into practice, I completed an AWS project where I hosted an NGINX web server on an Ubuntu EC2 instance and connected it to a domain using Amazon Route 53.
 
-The aim was to understand what actually happens between entering a domain name in a browser and reaching a web server running in the cloud.
+The aim of the project was to take some of the concepts I had been learning, particularly DNS, IP addresses, ports and cloud networking, and use them in a practical environment.
 
 ## What I Built
 
-For the project I:
+I started by launching an Ubuntu EC2 instance which would act as my server.
 
-1. Launched an Ubuntu EC2 instance.
-2. Configured the EC2 Security Group to allow the required network traffic.
-3. Connected remotely to the server using SSH.
-4. Installed and started NGINX.
-5. Used Amazon Route 53 to manage the DNS configuration.
-6. Created an A record pointing the domain to the EC2 instance's public IPv4 address.
-7. Tested the domain in a browser and successfully reached the NGINX web server.
+I then configured the EC2 Security Group to allow the network traffic I needed. SSH was required so I could remotely access the server, while HTTP was required so the NGINX website could be accessed through a browser.
 
-The finished setup connected several of the concepts covered during the module:
+After connecting to the instance using SSH, I installed NGINX and made sure the service was running correctly.
 
-**Domain → Route 53 DNS → A Record → EC2 Public IPv4 → NGINX**
+I then used Amazon Route 53 to configure the DNS for my domain. I created an A record which pointed the domain to the public IPv4 address of the EC2 instance.
 
----
+Once everything was configured, I entered the domain into a browser and successfully reached the NGINX welcome page running on the EC2 server.
 
-## AWS Services and Technologies Used
+## Technologies Used
 
 ### Amazon EC2
 
-EC2 was used to create the Ubuntu virtual server that hosted NGINX.
+I used Amazon EC2 to create the Ubuntu virtual server that hosted NGINX.
+
+This also gave me practical experience remotely connecting to a cloud server rather than only working from my local Linux environment.
 
 ### Amazon Route 53
 
-Route 53 was used for DNS. I created an A record that mapped the domain to the public IPv4 address of the EC2 instance.
+I used Route 53 to manage the DNS configuration for the domain.
 
-### Security Groups
+An A record was created to associate the domain with the public IPv4 address of the EC2 instance.
 
-The EC2 Security Group controlled which traffic could reach the instance.
+This helped me put the DNS theory from the module into practice and see how a domain is connected to the server hosting a website.
 
-The main ports involved in the project were:
+### EC2 Security Groups
 
-| Port | Service | Use |
-|---|---|---|
-| 22 | SSH | Remote access to the EC2 instance |
-| 80 | HTTP | Access to the NGINX web server |
-| 443 | HTTPS | HTTPS traffic |
+I used a Security Group to control which inbound traffic was allowed to reach the EC2 instance.
+
+The two main ports used during the project were:
+
+- **Port 22 - SSH** for remotely accessing the EC2 instance
+- **Port 80 - HTTP** for allowing users to access the NGINX web server
+
+This gave me a better understanding of how ports and security rules are used together to control access to services running on a server.
 
 ### NGINX
 
 NGINX was installed on the Ubuntu EC2 instance and used as the web server.
 
+After installing it, I enabled and started the service before checking its status to make sure it was running successfully.
+
 ---
 
 ## Troubleshooting
 
-The project also gave me some useful troubleshooting experience.
+Not everything worked first time during the project, which gave me the opportunity to troubleshoot some problems along the way.
 
-### SSH Connection
+### SSH Access
 
-Before I could configure the server, I needed to make sure SSH access was correctly set up.
+To remotely access the EC2 instance, I needed to make sure SSH traffic was allowed through the Security Group and that my SSH private key had the correct permissions.
 
-This helped reinforce the relationship between SSH, port 22, EC2 Security Groups and private key authentication.
+Working through this helped reinforce why port 22 is needed for SSH and how Security Groups control whether that connection is allowed to reach an EC2 instance.
 
 ### NGINX Installation
 
-When I first tried to install NGINX, I received `404 Not Found` errors while Ubuntu was trying to retrieve packages.
+When I first tried to install NGINX, I received `404 Not Found` errors while Ubuntu was trying to retrieve the packages.
 
-I initially had to work out whether the issue was related to the EC2 networking configuration or the package manager.
+At first I had to work out whether the problem was being caused by my EC2 networking configuration or Ubuntu itself.
 
-The problem was outdated package information. Running:
+The package information on the instance needed to be refreshed. I ran:
 
 ```bash
 sudo apt update
 ```
 
-refreshed the available package information, after which NGINX installed successfully.
+After updating the package information, I was able to install NGINX successfully.
 
-This was a good example of troubleshooting the actual cause of a problem rather than assuming it was a networking issue.
+This was a useful troubleshooting experience because it showed me the importance of finding the actual cause of an error instead of assuming it is related to the part of the system I am currently working on.
 
-### Security Group Configuration
+### Security Group Rules
 
-I also had to make sure the correct inbound rules were configured for the services I wanted to access.
+I also had to make sure I was using the correct inbound rules for the services I wanted to access.
 
-This gave me practical experience of how ports are used to control access to services running on a cloud server.
+SSH required port 22 while the NGINX website required HTTP traffic through port 80.
+
+This helped turn what I had learnt about ports into something practical because I could see the effect of allowing or restricting traffic to a cloud server.
 
 ---
 
 ## Project Result
 
-After configuring EC2, NGINX, the Security Group and Route 53, I was able to enter the domain into a browser and successfully reach the NGINX welcome page hosted on the EC2 instance.
+The final result was a working NGINX web server hosted on an Ubuntu EC2 instance which could be accessed through my configured domain.
 
-This confirmed that the DNS record was resolving to the server and that HTTP traffic could reach NGINX.
+Getting the NGINX page to load through the domain confirmed that the different parts of the setup were working together correctly.
 
-## Key Takeaways
+It showed me in practice how Route 53 could resolve the domain using the A record, how the public IPv4 address identified the EC2 server, and how the Security Group allowed the HTTP request to reach NGINX.
 
-This module helped me understand networking beyond just memorising definitions.
+---
 
-Working through IP addressing, ports, DNS, routing, subnetting and NAT gave me a better understanding of how data moves through a network.
+## Screenshots
 
-The AWS project then gave me the opportunity to apply some of those concepts in practice by configuring a cloud server, controlling network access, working with DNS and making a web server accessible through a domain.
+The screenshots below show the main stages of the completed project.
 
-It also reinforced how important troubleshooting is in DevOps. Being able to work through a problem, identify where it is occurring and understand why it happened is just as important as knowing the commands needed to fix it.
+### NGINX Running
 
+![NGINX running on EC2](screenshots_project/nginx-running.png)
+
+NGINX successfully running on the Ubuntu EC2 instance.
+
+### Route 53 A Record
+
+![Route 53 A Record](screenshots_project/route53-a-record.png)
+
+The Route 53 A record configured to point the domain to the EC2 instance.
+
+### Website Working
+
+![Website working](screenshots_project/website-working.png)
+
+The NGINX welcome page successfully loading through the configured domain.
+
+---
+
+## What I Learnt
+
+The biggest takeaway from this module was starting to understand networking as one connected process rather than a collection of separate definitions.
+
+Learning about the OSI model gave me a foundation for understanding where different networking technologies operate, while topics such as IP addressing, routing, DNS, ports, TCP and UDP helped me understand how devices actually communicate.
+
+Subnetting and CIDR also helped me understand how IP networks can be divided and organised, while NAT showed me how private networks can communicate with the internet using public IP addresses.
+
+The AWS project was particularly useful because I was able to apply some of these concepts myself. Instead of only learning what DNS or a port does, I configured DNS records, opened specific ports, remotely accessed a server and made a web server available through a domain.
+
+I also gained more experience troubleshooting problems and working through them logically rather than immediately assuming what the cause was.
+
+Overall, the module gave me a much stronger understanding of the networking fundamentals that I will need as I continue learning DevOps and cloud technologies.
+
+---
+
+## Repository Contents
+
+- [Networking_notes.md](Networking_notes.md) - My notes from the Networking module
+- [commands.md](commands.md) - Networking and Linux commands covered during the module
+- `screenshots_project/` - Screenshots from the AWS Route 53 and EC2 project
