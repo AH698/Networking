@@ -140,8 +140,6 @@ It showed me in practice how Route 53 could resolve the domain using the A recor
 
 ## Screenshots
 
-The screenshots below show the main stages of the completed project.
-
 ### NGINX Running
 
 ![NGINX running on EC2](screenshots_project/nginx-running.png)
@@ -150,13 +148,13 @@ NGINX successfully running on the Ubuntu EC2 instance.
 
 ### Route 53 A Record
 
-![Route 53 A Record](screenshots_project/route53-a-record.png)
+![Route 53 A Record](screenshots_project/Route53-A-record.png)
 
 The Route 53 A record configured to point the domain to the EC2 instance.
 
 ### Website Working
 
-![Website working](screenshots_project/website-working.png)
+![Website working](screenshots_project/Website-working.png)
 
 The NGINX welcome page successfully loading through the configured domain.
 
@@ -176,10 +174,4 @@ I also gained more experience troubleshooting problems and working through them 
 
 Overall, the module gave me a much stronger understanding of the networking fundamentals that I will need as I continue learning DevOps and cloud technologies.
 
----
 
-## Repository Contents
-
-- [Networking_notes.md](Networking_notes.md) - My notes from the Networking module
-- [commands.md](commands.md) - Networking and Linux commands covered during the module
-- `screenshots_project/` - Screenshots from the AWS Route 53 and EC2 project
