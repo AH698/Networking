@@ -1,512 +1,269 @@
 # Networking Notes
 
-This document summarises the key networking concepts covered throughout the Networking module.
+These are my notes from the networking module, covering the main concepts I learnt and revised throughout the course.
+
+## Networking Basics
+
+A computer network allows devices to connect and communicate with each other. This allows things like file sharing, browsing the internet and applications communicating with other systems.
+
+**LAN (Local Area Network)** - A network covering a small area, for example devices connected to the same home Wi-Fi.
+
+**WAN (Wide Area Network)** - Covers a much larger area and can connect multiple LANs together. The internet is the biggest example of a WAN.
+
+**Switch** - Connects devices together within the same local network and helps send data to the correct device.
+
+**Router** - Connects different networks together and directs traffic between them.
+
+**Firewall** - Monitors incoming and outgoing network traffic and can allow or block traffic based on its rules.
 
 ---
 
-## 1. Networking Fundamentals
+## IP and MAC Addresses
 
-A **computer network** is a group of connected devices that can communicate and exchange data.
+An IP address allows devices on a network to locate and communicate with each other.
 
-Networks allow devices to:
+IPv4 addresses are 32 bits long and are split into four 8-bit sections called octets.
 
-- Communicate with each other
-- Share files and resources
-- Access websites and online services
-- Connect to applications and transfer data
+For example:
 
-### LAN
+`192.168.1.10`
 
-A **Local Area Network (LAN)** connects devices within a relatively small area, such as a home, office or school.
+IPv6 addresses are 128 bits long, which allows for far more addresses than IPv4.
 
-### WAN
-
-A **Wide Area Network (WAN)** covers a much larger geographical area and can connect multiple LANs together.
-
-The Internet is an example of a WAN.
-
-### Switch
-
-A switch connects devices within the same local network.
-
-It uses **MAC addresses** to help send data to the correct device within the LAN.
-
-### Router
-
-A router connects different networks together and directs traffic between them.
-
-Routers use **IP addresses** to determine where packets need to be sent.
-
-### Firewall
-
-A firewall monitors and controls incoming and outgoing network traffic.
-
-It acts as a security layer by allowing or blocking traffic based on configured rules.
+A MAC address is used to identify a network interface on a local network. One of the main differences I learnt is that MAC addresses are used for local network communication, while IP addresses allow traffic to be sent between networks.
 
 ---
 
-## 2. IP Addresses
+## Ports and Protocols
 
-An **IP address** is used to identify a device on a network so that devices can locate and communicate with each other.
+Ports are logical endpoints that identify which service or application traffic is meant for.
 
-There are two main versions of IP:
+Some of the main ports to remember are:
 
-### IPv4
+- SSH - 22
+- DNS - 53
+- HTTP - 80
+- HTTPS - 443
 
-IPv4 addresses contain **32 bits**.
-
-They are divided into four sections called **octets**, with each octet containing 8 bits.
-
-Example:
-
-```text
-192.168.1.10
-```
-
-### IPv6
-
-IPv6 addresses contain **128 bits**, providing a much larger number of available addresses than IPv4.
-
-### MAC Addresses
-
-A **MAC address** identifies a device's network interface and is mainly used for communication within a local network.
-
-A simple way of distinguishing the two is:
-
-- **IP address** → identifies and routes devices across networks
-- **MAC address** → identifies devices/interfaces on the local network
-
----
-
-## 3. Ports and Protocols
-
-### Ports
-
-Ports are logical endpoints used to identify which application or service network traffic should be delivered to.
-
-Some common ports include:
-
-| Port | Service |
-|---|---|
-| 22 | SSH |
-| 53 | DNS |
-| 80 | HTTP |
-| 443 | HTTPS |
-
-### Protocols
-
-Protocols are sets of rules that determine how data is transmitted between devices.
-
-Two important transport protocols are **TCP** and **UDP**.
+Protocols are basically rules for how data is communicated between devices.
 
 ### TCP
 
-**Transmission Control Protocol (TCP)** is connection-oriented and focuses on reliable communication.
+TCP is connection-oriented and focuses on making sure data is delivered reliably and in the correct order.
 
-TCP:
-
-- Establishes a connection before sending data
-- Ensures data arrives in the correct order
-- Retransmits lost data
-- Provides error and flow control
+Before sending data, TCP establishes a connection. If data is lost during transmission it can be retransmitted.
 
 ### UDP
 
-**User Datagram Protocol (UDP)** is connectionless.
+UDP is connectionless and doesn't provide the same delivery guarantees as TCP.
 
-Unlike TCP, UDP does not establish a connection beforehand or guarantee that every piece of data will arrive.
-
-This reduces overhead and makes UDP faster for applications where speed is important.
+Because it doesn't have the same checks as TCP, it has less overhead and can be faster. This makes it useful when speed is more important than making sure every piece of data arrives.
 
 ---
 
-## 4. The OSI Model
+## OSI Model
 
-The **OSI model** explains network communication using seven different layers.
+The OSI model breaks network communication down into seven layers.
 
-Each layer has a specific responsibility.
+### 1. Physical
+Deals with the actual transmission of raw bits. This includes things like cables, NICs, hubs, repeaters and signals.
 
-### Layer 7 - Application
+### 2. Data Link
+Handles communication on the local network. This is where MAC addresses and frames come in. Switches mainly work at this layer.
 
-Provides network services to applications.
+### 3. Network
+Handles IP addresses and routing. Routers use this layer to move packets between different networks.
 
-Examples include:
+### 4. Transport
+Handles end-to-end communication. TCP and UDP work here, along with ports. Data can also be broken into smaller segments and put back together.
 
-- HTTP/HTTPS
-- DNS
-- SSH
+### 5. Session
+Starts, manages and ends communication sessions between devices.
 
-### Layer 6 - Presentation
+### 6. Presentation
+Deals with how the data is presented. This includes formatting, encryption/decryption and compression.
 
-Handles how data is represented.
-
-Responsibilities include:
-
-- Data formatting
-- Encryption and decryption
-- Compression
-
-### Layer 5 - Session
-
-Establishes, manages and terminates communication sessions between devices.
-
-### Layer 4 - Transport
-
-Provides end-to-end communication.
-
-This layer includes:
-
-- TCP
-- UDP
-- Ports
-- Segmentation and reassembly
-
-### Layer 3 - Network
-
-Responsible for moving packets between different networks.
-
-This layer handles:
-
-- IP addressing
-- Routing
-
-Routers operate at this layer.
-
-### Layer 2 - Data Link
-
-Handles communication across the local network.
-
-This layer uses:
-
-- MAC addresses
-- Frames
-
-Switches mainly operate at this layer.
-
-### Layer 1 - Physical
-
-Responsible for physically transmitting raw bits.
-
-This includes:
-
-- Cables
-- NICs
-- Hubs
-- Repeaters
-- Physical signals
+### 7. Application
+The layer closest to the applications we actually use. Protocols and services such as HTTP, HTTPS, DNS and SSH work here.
 
 ---
 
-## 5. TCP/IP Model
+## TCP/IP Model
 
-The **TCP/IP model** is another model used to describe network communication.
+The TCP/IP model has four layers instead of seven:
 
-It contains four layers:
+- **Application** - Includes things such as HTTP, TLS and DNS.
+- **Transport** - TCP and UDP.
+- **Internet** - IP addressing and routing.
+- **Network Access** - Handles communication over the actual network, such as Ethernet and Wi-Fi.
 
-### Application
-
-Provides network services to applications.
-
-Examples include HTTP, TLS and DNS.
-
-### Transport
-
-Handles end-to-end communication using protocols such as TCP and UDP.
-
-### Internet
-
-Responsible for IP addressing and routing packets between networks.
-
-### Network Access
-
-Handles communication across the physical/local network using technologies such as Ethernet and WLAN.
+The TCP/IP model groups some of the OSI layers together but covers the same general process of getting data from one device to another.
 
 ---
 
-## 6. DNS
+## DNS
 
-**DNS (Domain Name System)** translates human-readable domain names into IP addresses.
+DNS stands for Domain Name System. Its job is to translate domain names that humans can easily remember into IP addresses that computers can use.
 
-Instead of users having to remember an IP address, they can use a domain name.
+For example, when someone enters a website domain, DNS is used to find the IP address associated with it.
 
-For example:
+There are a few important parts involved in a DNS lookup:
 
-```text
-example.com → IP address
-```
+**DNS Resolver** - Receives the request and checks whether it already has the answer cached. If it doesn't, it starts looking for the answer.
 
-### DNS Resolution
+**Root Server** - Points the resolver towards the correct TLD server.
 
-A DNS request can pass through several different servers before the correct IP address is returned.
+**TLD Server** - Deals with top-level domains such as `.com`, `.org` and `.co.uk` and points the resolver towards the correct authoritative name server.
 
-A simplified process is:
+**Authoritative Name Server** - Stores the DNS records for the domain and provides the requested information.
 
-```text
-Client
-  ↓
-DNS Resolver
-  ↓
-Root Server
-  ↓
-TLD Server
-  ↓
-Authoritative Name Server
-```
+### DNS Records
 
-### DNS Resolver
+Some of the main DNS records I covered were:
 
-The resolver receives the request from the client.
-
-It can first check its cache to see if it already knows the answer.
-
-If not, it continues the DNS lookup process.
-
-### Root Server
-
-The root server directs the resolver towards the appropriate **Top-Level Domain (TLD)** server.
-
-### TLD Server
-
-The TLD server handles extensions such as `.com`, `.org` and `.co.uk`.
-
-It directs the resolver towards the correct authoritative name server.
-
-### Authoritative Name Server
-
-The authoritative name server stores the actual DNS records for a domain and provides the requested information.
+- **A** - Maps a domain to an IPv4 address
+- **AAAA** - Maps a domain to an IPv6 address
+- **CNAME** - Creates an alias that points to another hostname
+- **MX** - Specifies the mail server for a domain
+- **TXT** - Stores text information such as verification information
+- **NS** - Identifies the authoritative name servers for a domain
 
 ---
 
-## 7. DNS Records
+## Routing
 
-DNS information is stored as records within zone files.
+Routing is how data finds its way between different networks.
 
-Important DNS records include:
+A router looks at the destination IP address and uses its routing table to decide where the packet should be sent next.
 
-### A Record
+A routing table contains the available routes the device knows about.
 
-Maps a domain or hostname to an **IPv4 address**.
+The **next hop** is the next router or destination the packet needs to be sent to.
 
-### AAAA Record
+A **default route** is used when there isn't a more specific route available. For IPv4 this is written as `0.0.0.0/0`.
 
-Maps a domain or hostname to an **IPv6 address**.
+The **default gateway** is normally the router that a device sends traffic to when it needs to communicate outside its own local network.
 
-### CNAME Record
+I also covered two types of routing:
 
-Creates an alias by pointing one hostname to another hostname.
+**Static routing** - Routes are manually configured and stay fixed.
 
-### MX Record
+**Dynamic routing** - Routes can change automatically using routing protocols.
 
-Specifies which mail server is responsible for receiving email for a domain.
-
-### TXT Record
-
-Stores text-based information for a domain and can be used for verification, SPF and other metadata.
-
-### NS Record
-
-Identifies the authoritative name servers responsible for a DNS zone.
+OSPF and BGP are examples of dynamic routing protocols. OSPF calculates routes based on network information and costs, while BGP exchanges routing information between networks and can make decisions based on paths and policies.
 
 ---
 
-## 8. Routing
+## Binary
 
-**Routing** is the process of determining the path data should take across networks.
+Binary uses just `0` and `1`, with each individual number being called a bit.
 
-A router examines the destination IP address and uses its **routing table** to decide where a packet should be sent next.
+IPv4 has 32 bits in total, split into four groups of 8 bits.
 
-### Routing Table
+The values for an 8-bit octet are:
 
-A routing table contains routes that a router or device can use to reach different networks.
+`128 64 32 16 8 4 2 1`
 
-### Next Hop
+For example, decimal 192 in binary is:
 
-The **next hop** is the next router or destination that a packet should be forwarded to.
+`11000000`
 
-### Default Route
-
-A default route is used when there is no more specific route available.
-
-IPv4 default route:
-
-```text
-0.0.0.0/0
-```
-
-### Default Gateway
-
-The default gateway is normally the router a device sends traffic to when the destination is outside its local network.
-
-### Static vs Dynamic Routing
-
-**Static routing** uses routes that are manually configured and remain fixed.
-
-**Dynamic routing** allows routes to be learned and adjusted automatically using routing protocols.
-
-Examples covered include:
-
-- **OSPF** - Uses network information and costs to calculate routes.
-- **BGP** - Exchanges routing information and allows routing decisions based on paths and policies.
+Learning binary helped make CIDR and subnetting make more sense because the prefix length is really describing how many bits belong to the network.
 
 ---
 
-## 9. Binary
+## CIDR
 
-Computers represent data using **binary**, which consists of:
+CIDR stands for Classless Inter-Domain Routing.
 
-```text
-0 and 1
-```
+An example of CIDR notation is:
 
-Each individual binary digit is called a **bit**.
+`192.168.1.0/24`
 
-An IPv4 address contains 32 bits divided into four 8-bit octets.
+The `/24` means that 24 of the 32 bits are being used for the network part of the address. This leaves 8 bits for hosts.
 
-The values of the eight positions within an octet are:
+To work out the host bits:
 
-```text
-128  64  32  16  8  4  2  1
-```
+`32 - prefix length`
 
-For example:
+So for a `/24`:
 
-```text
-192 = 11000000
-```
-
-Understanding binary helps explain how IP addressing, subnet masks and subnetting work.
+`32 - 24 = 8 host bits`
 
 ---
 
-## 10. CIDR
+## Subnetting
 
-**CIDR (Classless Inter-Domain Routing)** is used for allocating IP addresses and routing networks.
+Subnetting means taking a larger network and dividing it into smaller networks.
 
-CIDR notation includes an IP address followed by a prefix length.
-
-Example:
-
-```text
-192.168.1.0/24
-```
-
-The `/24` means that the first **24 bits** represent the network portion of the address.
-
-Since IPv4 contains 32 bits:
-
-```text
-Host bits = 32 - prefix length
-```
-
-Therefore a `/24` leaves 8 bits for the host portion.
-
----
-
-## 11. Subnetting
-
-**Subnetting** is the process of dividing a larger network into smaller networks.
-
-This allows IP address ranges to be organised into separate subnets.
-
-Important parts of a subnet include:
+The main things I needed to understand when working with a subnet were:
 
 - Network address
-- Host addresses
 - Broadcast address
+- Usable host addresses
 - Prefix length
 
-The network address is the first address within the subnet.
+The network address is the first address in the subnet and the broadcast address is the last.
 
-The broadcast address is traditionally the final address within the subnet.
+The formulas I used were:
 
-Addresses between these can be used for hosts.
+`Host bits = 32 - prefix length`
 
-### Subnetting Formulas
+`Total addresses = 2 ^ host bits`
 
-```text
-Host bits = 32 - prefix length
-
-Total addresses = 2 ^ host bits
-
-Usable hosts = total addresses - 2
-```
+`Usable hosts = total addresses - 2`
 
 ---
 
-## 12. NAT
+## NAT
 
-**Network Address Translation (NAT)** translates between private and public IP addresses.
+NAT stands for Network Address Translation.
 
-Devices inside a private network can use private IP addresses while NAT allows them to communicate with external networks such as the Internet.
+It allows devices using private IP addresses to communicate with networks outside their private network by translating between private and public IP addresses.
 
-A simplified example is:
+This is useful because devices inside a home or office network can have their own private IP addresses while still being able to access the internet.
 
-```text
-Private Network
-      ↓
-     NAT
-      ↓
-Public IP Address
-      ↓
-   Internet
-```
+I covered three types:
 
-### Static NAT
+**Static NAT** - One private IP is permanently mapped to one public IP.
 
-Static NAT creates a fixed mapping between one private IP address and one public IP address.
+**Dynamic NAT** - Private IPs can be translated using a pool of available public IP addresses.
 
-### Dynamic NAT
+**PAT (Port Address Translation)** - Multiple devices can share the same public IP address. Different port mappings are used to keep track of the different connections.
 
-Dynamic NAT can map private addresses to available addresses from a pool of public IP addresses.
-
-### PAT
-
-**Port Address Translation (PAT)** allows multiple devices to share a single public IP address.
-
-Different port mappings allow the router to keep track of which internal connection the traffic belongs to.
+PAT is commonly how multiple devices on the same private network can access the internet through one public IPv4 address.
 
 ---
 
-## 13. Network Troubleshooting
+## Network Troubleshooting
 
-Network troubleshooting is the process of identifying, diagnosing and resolving network problems.
+Network troubleshooting is about finding the cause of a networking problem and then fixing it in a logical way rather than randomly changing things.
 
-Common network issues can include:
+Some common problems include:
 
-- Loss of connectivity
+- No connectivity
 - Slow network performance
-- IP address conflicts
+- IP conflicts
 - DNS failures
 
-Troubleshooting should be approached logically rather than randomly changing configurations.
+For example, if there is no connectivity I could start by checking the physical/network connection and IP configuration before moving on to checking whether other devices or destinations can be reached.
 
-For a connectivity problem, checks can include:
-
-1. Check physical/network connections
-2. Check network configuration
-3. Check IP addressing
-4. Test whether the destination can be reached
-5. Check the route traffic is taking
-6. Check whether DNS is resolving correctly
+The main thing I took from troubleshooting was to work through the network step-by-step so I can narrow down where the problem is happening.
 
 ---
 
-## 14. Cloud Networking
+## Cloud Networking
 
-Cloud networking applies networking concepts within cloud environments.
+The final area I covered was cloud networking.
 
-It allows cloud resources such as servers to communicate with each other, private networks and the Internet.
+Cloud networking uses the same networking fundamentals but applies them to resources running in cloud environments.
 
-Some important cloud networking components include:
+Some of the main components I learnt about were:
 
-### VPC
+**VPC (Virtual Private Cloud)** - A virtual network used to organise and isolate cloud resources.
 
-A **Virtual Private Cloud (VPC)** provides an isolated virtual network within a cloud environment.
+**Subnets** - Smaller networks created inside a larger network.
 
-### Subnets
+**Gateways** - Allow traffic to move between different networks.
 
-Subnets divide a larger cloud network into smaller network ranges.
-
-### Gateways
-
-Gateways allow traffic to move between different networks.
+This helped bring together topics like IP addressing, subnetting, routing and network access before moving onto the AWS practical.
